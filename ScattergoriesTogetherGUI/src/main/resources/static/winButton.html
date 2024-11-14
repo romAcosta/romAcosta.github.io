@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+    <title>Title</title>
+  <script type="text/javascript">
+
+    function getCredentials() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      return username + ":" + password;
+    }
+
+
+    function win() {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", , true);
+      xmlHttp.setRequestHeader("Content-Type", "application/json");
+      xmlHttp.send();
+      xmlHttp.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          var champions = JSON.parse(this.responseText);
+          renderList(champions);
+        }
+      }
+    }
+
+    function deleteIt() {
+      var id = document.getElementById("txtFindID").value;
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("DELETE", "http://localhost:8080/champion/" + id);
+      xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
+      xmlHttp.send();
+      xmlHttp.onreadystatechange = function () {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+          getAll();
+        }
+      }
+    }
+
+    function create() {
+      var id = document.getElementById("txtID").value;
+      var name = document.getElementById("txtName").value;
+      var regionId = document.getElementById("txtRegionID").value;
+
+      var entry = {
+        "id": id,
+        "name": name,
+        "regionId": regionId
+      }
+
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("POST", "http://localhost:8080/champion");
+      xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
+      xmlHttp.setRequestHeader("Content-Type", "application/json");
+      xmlHttp.send(JSON.stringify(entry));
+      xmlHttp.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          getAll();
+        }
+      }
+
+
+
+    }
+  </script>
+</head>
+<body>
+<button>WIN</button>
+</body>
+</html>

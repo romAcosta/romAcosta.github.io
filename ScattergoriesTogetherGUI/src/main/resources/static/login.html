@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+	<script type="text/javascript">
+
+		function login() {
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+
+			var entry = {
+				"username": username,
+				"password": password,
+
+			}
+
+
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("POST", "http://localhost:8080/login");
+			xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
+			xmlHttp.setRequestHeader("Content-Type", "application/json");
+			xmlHttp.send(JSON.stringify(entry));
+		}
+
+
+
+
+		function deleteIt() {
+			var id = document.getElementById("txtFindID").value;
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("DELETE", "http://localhost:8080/champion/" + id);
+			xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
+			xmlHttp.send();
+			xmlHttp.onreadystatechange = function () {
+				if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+					getAll();
+				}
+			}
+		}
+
+		function create() {
+			var id = document.getElementById("txtID").value;
+			var name = document.getElementById("txtName").value;
+			var regionId = document.getElementById("txtRegionID").value;
+
+
+			xmlHttp.onreadystatechange = function () {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					getAll();
+				}
+			}
+
+
+
+		}
+	</script>
+</header>
+<body>
+	<h1>
+		Login
+	</h1>
+
+	<label for="username">Username:</label>
+	<input type="text" id="username" placeholder="Enter Username" required>
+
+	<label for="password">Password:</label>
+	<input type="password" id="password" placeholder="Enter Password" required>
+
+	<button onclick="login();">Login</button>
+
+	<button>To Register</button>
+</body>
+</html>
