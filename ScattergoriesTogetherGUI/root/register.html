@@ -7,17 +7,29 @@
 				var username = document.getElementById("username").value;
 				var password = document.getElementById("password").value;
 	
-				var entry = {
-					"username": username,
-					"password": password,
-	
-				}
 	
 	
 				var xmlHttp = new XMLHttpRequest();
-				xmlHttp.open("POST", "http://localhost:8080/login");
-				xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
+				xmlHttp.open("POST", "http://localhost:8080/signup/create/" + username + "/" + password );
 				xmlHttp.setRequestHeader("Content-Type", "application/json");
+
+
+				xmlHttp.onload = function () {
+        			if (xmlHttp.status >= 200 && xmlHttp.status < 300) {  
+            			var response = xmlHttp.responseText;  
+						if(response === "User Made"){
+							window.location.href = '/index.html';
+							alert(response);
+						}else{
+							alert(response);  
+						}
+            			
+        			} else {
+            			console.error("Error: " + xmlHttp.statusText);  // Handle errors
+        			}
+    			};
+
+
 				xmlHttp.send(JSON.stringify(entry));
 			}
 	
