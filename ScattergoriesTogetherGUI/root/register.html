@@ -11,7 +11,7 @@
 	
 	
 				var xmlHttp = new XMLHttpRequest();
-				xmlHttp.open("POST", "http://localhost:8080/signup/create/" + username + "/" + password );
+				xmlHttp.open("POST", "http://scattergoriestogetherapi.onrender.com/signup/create/" + username + "/" + password );
 				xmlHttp.setRequestHeader("Content-Type", "application/json");
 
 
@@ -37,34 +37,7 @@
 	
 	
 	
-			function deleteIt() {
-				var id = document.getElementById("txtFindID").value;
-				var xmlHttp = new XMLHttpRequest();
-				xmlHttp.open("DELETE", "http://localhost:8080/champion/" + id);
-				xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
-				xmlHttp.send();
-				xmlHttp.onreadystatechange = function () {
-					if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-						getAll();
-					}
-				}
-			}
-	
-			function create() {
-				var id = document.getElementById("txtID").value;
-				var name = document.getElementById("txtName").value;
-				var regionId = document.getElementById("txtRegionID").value;
-	
-	
-				xmlHttp.onreadystatechange = function () {
-					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-						getAll();
-					}
-				}
-	
-	
-	
-			}
+			
 		</script>
 	</head>
 <body>
