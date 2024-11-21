@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script type="text/javascript">
+	
+			function signup() {
+				var username = document.getElementById("username").value;
+				var password = document.getElementById("password").value;
+	
+	
+	
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("POST", "http://localhost:8080/signup/create/" + username + "/" + password );
+				xmlHttp.setRequestHeader("Content-Type", "application/json");
+				var data = { username: username, password: password };
+
+				xmlHttp.onload = function () {
+        			if (xmlHttp.status >= 200 && xmlHttp.status < 300) {  
+            			var response = xmlHttp.responseText;  
+						if(response === "User Made"){
+							window.location.href = '/index.html';
+							alert(response);
+						}else{
+							alert(response);  
+						}
+            			
+        			} else {
+            			console.error("Error: " + xmlHttp.statusText);
+						  // Handle errors
+        			}
+    			};
+
+
+				xmlHttp.send(JSON.stringify(data));
+			}
+	
+	
+	
+	
+			function deleteIt() {
+				var id = document.getElementById("txtFindID").value;
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("DELETE", "http://localhost:8080/champion/" + id);
+				xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
+				xmlHttp.send();
+				xmlHttp.onreadystatechange = function () {
+					if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+						getAll();
+					}
+				}
+			}
+	
+			function create() {
+				var id = document.getElementById("txtID").value;
+				var name = document.getElementById("txtName").value;
+				var regionId = document.getElementById("txtRegionID").value;
+	
+	
+				xmlHttp.onreadystatechange = function () {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						getAll();
+					}
+				}
+	
+	
+	
+			}
+		</script>
+	</head>
+<body>
+	<h1>
+		Register Account
+	</h1>
+
+	<label for="username">Username:</label>
+	<input type="text" id="username" placeholder="Enter Username" required>
+
+	<label for="password">Password:</label>
+	<input type="password" id="password" placeholder="Enter Password" required>
+
+	
+	<button onclick="signup()">Register</button>
+	
+
+	<form action="login.html" method="get">
+		<button>To Login</button>
+	</form>
+</body>
+</html>
