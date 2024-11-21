@@ -22,3 +22,12 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+.vs/romAcosta.github.io/FileContentIndex/77560d8a-6f9c-4f61-8e92-622b1c77f3d0.vsidx
+.vs/romAcosta.github.io/FileContentIndex/a7ff1227-23e7-4854-971e-e96bbcd50477.vsidx
+.vs/romAcosta.github.io/FileContentIndex/d07afe25-70db-4f8e-9f94-80199a45a1ce.vsidx
+.vs/romAcosta.github.io/FileContentIndex/d56e743a-0e7f-4878-b2c3-76055b905e7f.vsidx
+*.vsidx
+.vs/ProjectSettings.json
+.vs/romAcosta.github.io/v17/.wsuo
+.vs/romAcosta.github.io/v17/DocumentLayout.json
+.vs/slnx.sqlite
