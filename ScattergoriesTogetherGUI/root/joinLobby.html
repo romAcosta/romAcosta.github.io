@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+	<link rel="stylesheet" href="scattergoriesTogether.css">
+</head>
 <body>
-	<h1>
-		Join Lobby
-	</h1>
+	<div class="container">
+		<h1>Join Lobby</h1>
 
-	<label for="lobbyID">Lobby ID:</label>
-	<input type="number" id="lobbyID" placeholder="Enter ID" required>
+		<label for="lobbyID">Lobby ID:</label>
+		<input type="number" id="lobbyID" placeholder="Enter ID" required>
 
-	<form action="lobby.html" method="get">
-		<button>Search</button>
-	</form>
+		<button onclick="window.location.href='lobby.html'">Search</button>
+	</div>
 </body>
 </html>

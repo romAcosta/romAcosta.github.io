@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+	<link rel="stylesheet" href="scattergoriesTogether.css">
+</head>
 <body>
-	<h1>
-		Register Account
-	</h1>
+	<div class="container">
+		<h1>
+			Register Account
+		</h1>
 
-	<label for="username">Username:</label>
-	<input type="text" id="username" placeholder="Enter Username" required>
+		<label for="username">Username:</label>
+		<input type="text" id="username" placeholder="Enter Username" required>
 
-	<label for="password">Password:</label>
-	<input type="password" id="password" placeholder="Enter Password" required>
+		<label for="password">Password:</label>
+		<input type="password" id="password" placeholder="Enter Password" required>
 
-	<form action="index.html" method="get">
-		<button>Register</button>
-	</form>
+		<h1>
+			<button onclick="window.location.href='index.html'">Register</button>
 
-	<form action="login.html" method="get">
-		<button>To Login</button>
-	</form>
+			<button onclick="window.location.href='login.html'">To Login</button>
+		</h1>
+	</div>
 </body>
 </html>

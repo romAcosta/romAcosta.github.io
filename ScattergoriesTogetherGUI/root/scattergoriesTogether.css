@@ -1,0 +1,124 @@
+/* General Reset */
+body, h1, h2, p, ul, li, a, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe5b4; /* Soft peachy background */
+    color: #333; /* Neutral text color for readability */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.centered {
+    text-align: center;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 4px solid #ff7f50; /* Coral border like a game card */
+}
+
+.spaced {
+    margin: 100px;
+}
+
+/* Header */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff4500; /* Vivid orange-red like Scattergories' logo */
+    text-shadow: 2px 2px #f7f0d7; /* Light shadow effect */
+    margin-bottom: 20px;
+}
+
+/* Subheadings */
+h2 {
+    font-size: 1.8rem;
+    color: #ff6347; /* Tomato color for consistency */
+    margin-bottom: 15px;
+}
+
+/* Paragraph */
+p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* List Styling */
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+}
+
+li {
+    font-size: 1rem;
+    color: #ff7f50;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+button {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+    button:hover {
+        background-color: #ff6347; /* Tomato shade for hover effect */
+        transform: scale(1.1); /* Enlarge on hover */
+    }
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #ff4500;
+    font-weight: bold;
+}
+
+    a:hover {
+        color: #ff6347;
+        text-decoration: underline;
+    }
+
+/* Game Board-Like Sections */
+.board-section {
+    border: 3px dashed #ff6347;
+    padding: 15px;
+    margin: 20px 0;
+    background-color: #fdf5e6; /* Light beige for contrast */
+    border-radius: 10px;
+}
+
+    .board-section h2 {
+        margin-bottom: 10px;
+    }
+
+/* Footer */
+footer {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 20px;
+}
