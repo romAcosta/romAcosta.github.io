@@ -9,7 +9,7 @@
 				var password = document.getElementById("password").value;
 	
 	
-	
+				var data = { username: username, password: password };
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open("POST", "http://scattergoriestogetherapi.onrender.com/signup/create/" + username + "/" + password );
 				xmlHttp.setRequestHeader("Content-Type", "application/json");
