@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="scattergoriesTogether.css">
 		<script type="text/javascript">
 	
 			function signup() {
@@ -13,7 +12,7 @@
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open("POST", "http://localhost:8080/signup/create/" + username + "/" + password );
 				xmlHttp.setRequestHeader("Content-Type", "application/json");
-
+				var data = { username: username, password: password };
 
 				xmlHttp.onload = function () {
         			if (xmlHttp.status >= 200 && xmlHttp.status < 300) {  
@@ -26,12 +25,13 @@
 						}
             			
         			} else {
-            			console.error("Error: " + xmlHttp.statusText);  // Handle errors
+            			console.error("Error: " + xmlHttp.statusText);
+						  // Handle errors
         			}
     			};
 
 
-				xmlHttp.send(JSON.stringify(entry));
+				xmlHttp.send(JSON.stringify(data));
 			}
 	
 	
@@ -68,23 +68,22 @@
 		</script>
 	</head>
 <body>
-	<div class="container">
-		<h1>
-			Register Account
-		</h1>
+	<h1>
+		Register Account
+	</h1>
 
-		<label for="username">Username:</label>
-		<input type="text" id="username" placeholder="Enter Username" required>
+	<label for="username">Username:</label>
+	<input type="text" id="username" placeholder="Enter Username" required>
 
-		<label for="password">Password:</label>
-		<input type="password" id="password" placeholder="Enter Password" required>
+	<label for="password">Password:</label>
+	<input type="password" id="password" placeholder="Enter Password" required>
 
 	
-		<h1>
-			<button onclick="signup()">Register</button>
+	<button onclick="signup()">Register</button>
+	
 
-			<button onclick="window.location.href='login.html'">To Login</button>
-		</h1>
-	</div>
+	<form action="login.html" method="get">
+		<button>To Login</button>
+	</form>
 </body>
 </html>
