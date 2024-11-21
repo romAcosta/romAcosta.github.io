@@ -10,7 +10,21 @@
 		<label for="lobbyID">Lobby ID:</label>
 		<input type="number" id="lobbyID" placeholder="Enter ID" required>
 
-		<button onclick="window.location.href='lobby.html'">Search</button>
+		<button onclick="joinGame">Search</button>
 	</div>
+	<script>
+		import { apiRequest } from "./apiConfig"
+
+		export const joinGame = async (gameId, username) => {
+			try {
+				await apiRequest("/games/${gameId}/join", "POST", { username });
+				window.location.href="lobby.html"
+				return true;
+			} catch (error) {
+				console.error("Failed to join game:", error);
+				return false
+			}
+		}
+	</script>
 </body>
 </html>
