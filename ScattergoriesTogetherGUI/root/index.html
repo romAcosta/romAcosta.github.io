@@ -14,22 +14,9 @@
             <button onclick="window.location.href='register.html'">Register</button>
 
             <button onclick="window.location.href='lobby.html'">Create Lobby</button>
-            <button onclick="hostGame">Join Lobby</button>
+            <button onclick="window.location.href='joinLobby.html'">Join Lobby</button>
         </h2>
     </div>
-
-    <script>
-        import { apiRequest } from "./apiConfig"
-
-        export const hostGame = async () => {
-            try {
-                const data = await apiRequest("/games", "POST");
-                window.location.href="lobby.html"
-                return data.gameId;
-            } catch (error) {
-                console.error("Failed to host game:", error);
-            }
-        };
-    </script>
+    
 </body>
 </html>

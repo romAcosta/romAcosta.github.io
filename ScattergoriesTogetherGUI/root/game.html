@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<head>
-	<link rel="stylesheet" href="scattergoriesTogether.css">
-</head>
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="scattergoriesTogether.css">
@@ -9,16 +6,20 @@
 	<body>
 		<div class="centered">
 			<div class="container spaced">
-				<h2>Letter</h2>
-				<h2>Timer</h2>
+				<h2>Letter: <span id="game-letter"></span></h2>
+				<h2 id="timer">Time Remaining: 60s</h2>
 			</div>
 
 			<div class="container spaced">
-				<label for="answer">Prompt</label>
-				<input type="text" id="answer" placeholder="Answer" />
+				<p id="prompt-display"></p>
+				<form id="response-form">
+					<input type="text" id="response" placeholder="Enter response" required>
+				</form>
 			</div>
 
-			<button>Submit</button>
+			<button type="submit">Submit</button>
 		</div>
+		<script src="ScattergoriesTogetherGUI\src\apiConfig.js"></script>
+		<script src="ScattergoriesTogetherGUI\src\gameLogic.js"></script>
 	</body>
 </html>

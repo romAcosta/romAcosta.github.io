@@ -7,24 +7,12 @@
 	<div class="container">
 		<h1>Join Lobby</h1>
 
-		<label for="lobbyID">Lobby ID:</label>
-		<input type="number" id="lobbyID" placeholder="Enter ID" required>
-
-		<button onclick="joinGame">Search</button>
+		<form id="join-form">
+			<input type="text" id="game-id" placeholder="Enter Game ID" required>
+			<button type="submit">Join</button>
+		</form>
 	</div>
-	<script>
-		import { apiRequest } from "./apiConfig"
-
-		export const joinGame = async (gameId, username) => {
-			try {
-				await apiRequest("/games/${gameId}/join", "POST", { username });
-				window.location.href="lobby.html"
-				return true;
-			} catch (error) {
-				console.error("Failed to join game:", error);
-				return false
-			}
-		}
-	</script>
+	<script src="ScattergoriesTogetherGUI\src\apiConfig.js"></script>
+	<script src="ScattergoriesTogetherGUI\src\gameLogic.js"></script>
 </body>
 </html>

@@ -5,15 +5,15 @@
 <html lang="en">
 	<body>
 		<div>
-			<h1 class="container spaced">Lobby Code: </h1>
-
-			<h2 class="container spaced">Players: </h2>
-
-			<!-- Players will show up here when I figure out that connection -->
+			<p>Game ID: <span id="game-id-display"></span></p>
+			<p>Players:</p>
+			<ul id="player-list"></ul>
 
 			<div class="centered">
-				<button onclick="window.location.href='game.html'">Start Game</button>
+				<button id="start-game-btn">Start Game</button>
 			</div>
 		</div>
+		<script src="ScattergoriesTogetherGUI\src\apiConfig.js"></script>
+		<script src="ScattergoriesTogetherGUI\src\gameLogic.js"></script>
 	</body>
 </html>
