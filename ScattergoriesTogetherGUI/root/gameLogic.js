@@ -9,14 +9,14 @@ const safeAddEventListener = (id, event, handler) => {
 };
 
 // Show a specific screen by ID
-const showScreen = (id) => {
-    const screens = document.querySelectorAll(".screen");
-    screens.forEach((screen) => screen.classList.remove("active"));
-    const targetScreen = document.getElementById(id);
-    if (targetScreen) {
-        targetScreen.classList.add("active");
-    }
-};
+// const showScreen = (id) => {
+//     const screens = document.querySelectorAll(".screen");
+//     screens.forEach((screen) => screen.classList.remove("active"));
+//     const targetScreen = document.getElementById(id);
+//     if (targetScreen) {
+//         targetScreen.classList.add("active");
+//     }
+// };
 
 // Host Game Logic
 safeAddEventListener("host-game-btn", "click", async () => {
