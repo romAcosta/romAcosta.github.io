@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Menu actions
     document.getElementById("host-game-btn").addEventListener("click", async () => {
-        const data = await apiRequest("/games/create", "POST");
+        const data = await apiRequest("/games/create", "POST", { hostUsername: "YourHostName" });
         if (data) {
             document.getElementById("game-id-display").textContent = data.gameId;
             showScreen("host-game");
