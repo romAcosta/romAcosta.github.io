@@ -10,14 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     //Menu actions
-    document.getElementById("host-game-btn").addEventListener("click", async () => {
-        const data = await apiRequest("/games/create", "POST", { hostUsername: "YourHostName" });
-        if (data) {
-            document.getElementById("game-id-display").textContent = data.gameId;
-            showScreen("host-game");
-        }
-    });
-
     document.getElementById("join-game-submit-btn").addEventListener("click", async () => {
         const gameId = document.getElementById("join-game-id").value;
         const username = document.getElementById("username").value;
@@ -27,6 +19,16 @@ document.addEventListener("DOMContentLoaded", () => {
             showScreen("game-screen");
         } else {
             alert("Failed to join game. Check Game ID.");
+        }
+    });
+
+    document.getElementById("host-game-btn").addEventListener("click", async () => {
+        const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser"});
+        if (data && data.gameId) {
+            document.getElementById("game-id-display").textContent = data.gameId;
+            showScreen("host-game");
+        } else {
+            alert("Error: Game ID could not be created");
         }
     });
 
