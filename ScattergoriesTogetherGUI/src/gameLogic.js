@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Menu actions
     document.getElementById("host-game-btn").addEventListener("click", async () => {
-        const data = await apiRequest("/games", "POST");
+        const data = await apiRequest("/games/create", "POST");
         if (data) {
             document.getElementById("game-id-display").textContent = data.gameId;
             showScreen("host-game");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //Start game
     document.getElementById("start-game-btn").addEventListener("click", async () => {
         const gameId = document.getElementById("game-id-display").textContent;
-        await apiRequest("/games/${gameId}/startRound", "POST");
+        await apiRequest("/games/${gameId}/start", "POST");
         showScreen("game-screen");
     });
 
