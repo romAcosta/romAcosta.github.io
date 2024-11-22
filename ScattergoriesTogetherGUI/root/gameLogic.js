@@ -1,4 +1,4 @@
-import { apiRequest } from "./apiConfig";
+import { apiRequest } from "./apiConfig.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const app = document.getElementById("app");
