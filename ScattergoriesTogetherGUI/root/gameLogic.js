@@ -1,6 +1,5 @@
 import { apiRequest } from "./apiConfig.js";
 
-document.addEventListener("DOMContentLoaded", () => {
     const app = document.getElementById("app");
     const screens = document.querySelectorAll(".screen");
 
@@ -61,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Start the timer when the game screen is shown
     showScreen("menu");
-});
 
 // Fetch game details, including letter, prompts, and timer
 document.addEventListener("DOMContentLoaded", async () => {
