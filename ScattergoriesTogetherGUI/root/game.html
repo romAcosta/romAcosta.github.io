@@ -3,15 +3,15 @@
 	<head>
 		<link rel="stylesheet" href="scattergoriesTogether.css">
 	</head>
-	<body>
+	<body id="game-page">
 		<div class="centered">
 			<div class="container spaced">
-				<h2>Letter: <span id="game-letter"></span></h2>
+				<h2 id="game-letter">Letter:</h2>
 				<h2 id="timer">Time Remaining: 60s</h2>
 			</div>
 
 			<div class="container spaced">
-				<p>Prompt: <span id="prompt-display"></span></p>
+				<p id="prompt-display">Prompt:</p>
 				<form id="response-form">
 					<input type="text" id="response" placeholder="Enter response" required>
 					<button id="submit-response-btn" type="submit">Submit</button>
