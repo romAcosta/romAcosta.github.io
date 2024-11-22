@@ -11,7 +11,7 @@
 	
 				var data = { username: username, password: password };
 				var xmlHttp = new XMLHttpRequest();
-				xmlHttp.open("POST", "http://scattergoriestogetherapi.onrender.com/signup/create/" + username + "/" + password );
+				xmlHttp.open("POST", "https://scattergoriestogetherapi.onrender.com/signup/create/" + username + "/" + password );
 				xmlHttp.setRequestHeader("Content-Type", "application/json");
 
 
@@ -19,7 +19,7 @@
         			if (xmlHttp.status >= 200 && xmlHttp.status < 300) {  
             			var response = xmlHttp.responseText;  
 						if(response === "User Made"){
-							window.location.href = '/index.html';
+							window.location.href = '/ScattergoriesTogetherGUI/root/index.html';
 							alert(response);
 						}else{
 							alert(response);  
