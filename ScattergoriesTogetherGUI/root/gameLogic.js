@@ -1,65 +1,65 @@
 import { apiRequest } from "./apiConfig.js";
 
-    const app = document.getElementById("app");
-    const screens = document.querySelectorAll(".screen");
+const app = document.getElementById("app");
+const screens = document.querySelectorAll(".screen");
 
-    const showScreen = (id) => {
-        screens.forEach((screen) => screen.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-    };
+const showScreen = (id) => {
+    screens.forEach((screen) => screen.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+};
 
-    //Menu actions
-    document.getElementById("join-game-submit-btn").addEventListener("click", async () => {
-        const gameId = document.getElementById("join-game-id").value;
-        const username = document.getElementById("username").value;
+//Menu actions
+document.getElementById("join-game-submit-btn").addEventListener("click", async () => {
+    const gameId = document.getElementById("join-game-id").value;
+    const username = document.getElementById("username").value;
 
-        const success = await apiRequest("/games/${gameId}/join", "POST", { username });
-        if (success) {
-            showScreen("game-screen");
-        } else {
-            alert("Failed to join game. Check Game ID.");
-        }
-    });
-
-    document.getElementById("host-game-btn").addEventListener("click", async () => {
-        const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser"});
-        if (data && data.gameId) {
-            document.getElementById("game-id-display").textContent = data.gameId;
-            showScreen("host-game");
-        } else {
-            alert("Error: Game ID could not be created");
-        }
-    });
-
-    //Start game
-    document.getElementById("start-game-btn").addEventListener("click", async () => {
-        const gameId = document.getElementById("game-id-display").textContent;
-        await apiRequest("/games/${gameId}/start", "POST");
+    const success = await apiRequest("/games/${gameId}/join", "POST", { username });
+    if (success) {
         showScreen("game-screen");
-    });
+    } else {
+        alert("Failed to join game. Check Game ID.");
+    }
+});
 
-    //Submitting responses
-    document.getElementById("submit-response-btn").addEventListener("click", async () => {
-        const gameId = document.getElementById("game-id-display").textContent;
-        const username = document.getElementById("username").value;
-        const response = document.getElementById("response").value;
+document.getElementById("host-game-btn").addEventListener("click", async () => {
+    const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser"});
+    if (data && data.gameId) {
+        document.getElementById("game-id-display").textContent = data.gameId;
+        showScreen("host-game");
+    } else {
+        alert("Error: Game ID could not be created");
+    }
+});
 
-        await apiRequest("/games/${gameId}/responses", "POST", { username, responses: [response] });
-        alert("Response submitted!");
-    });
+//Start game
+document.getElementById("start-game-btn").addEventListener("click", async () => {
+    const gameId = document.getElementById("game-id-display").textContent;
+    await apiRequest("/games/${gameId}/start", "POST");
+    showScreen("game-screen");
+});
 
-    const endRound = async () => {
-        const gameId = document.getElementById("game-id-display").textContent;
-        await apiRequest("/games/${gameId}/endRound", "POST");
+//Submitting responses
+document.getElementById("submit-response-btn").addEventListener("click", async () => {
+    const gameId = document.getElementById("game-id-display").textContent;
+    const username = document.getElementById("username").value;
+    const response = document.getElementById("response").value;
 
-        const scores = await apiRequest("/games/${gameId}/scores");
-        const scoreList = document.getElementById("score-list");
-        scoreList.innerHTML = scores.map((s) => "<p>${s.username}: ${s.score}</p>").join("");
-        showScreen("scoreboard");
-    };
+    await apiRequest("/games/${gameId}/responses", "POST", { username, responses: [response] });
+    alert("Response submitted!");
+});
 
-    //Start the timer when the game screen is shown
-    showScreen("menu");
+const endRound = async () => {
+    const gameId = document.getElementById("game-id-display").textContent;
+    await apiRequest("/games/${gameId}/endRound", "POST");
+
+    const scores = await apiRequest("/games/${gameId}/scores");
+    const scoreList = document.getElementById("score-list");
+    scoreList.innerHTML = scores.map((s) => "<p>${s.username}: ${s.score}</p>").join("");
+    showScreen("scoreboard");
+};
+
+//Start the timer when the game screen is shown
+showScreen("menu");
 
 // Fetch game details, including letter, prompts, and timer
 document.addEventListener("DOMContentLoaded", async () => {
