@@ -21,11 +21,12 @@ const showScreen = (id) => {
 // Host Game Logic
 safeAddEventListener("host-game-btn", "click", async () => {
     const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser" });
+
     if (data && data.gameId) {
         const gameIdDisplay = document.getElementById("game-id-display");
         if (gameIdDisplay) {
-            gameIdDisplay.textContent = data.gameId;
-            showScreen("host-game");
+            gameIdDisplay.textContent = data.gameId; // Display the generated game ID
+            showScreen("host-game"); // Show the host game screen with the game code
         }
     } else {
         alert("Error: Game ID could not be created.");
