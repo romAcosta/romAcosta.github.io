@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
         // Fetch and display players
         const refreshPlayers = async () => {
-            const players = await apiRequest('/games/${gameId}/players', "GET");
+            const players = await apiRequest(`/games/${gameId}/players`, "GET");
             const playerList = document.getElementById("player-list");
             playerList.innerHTML = players.map(p => '<li>${p.username}</li>').join("");
         };
