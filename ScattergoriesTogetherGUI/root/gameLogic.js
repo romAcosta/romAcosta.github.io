@@ -158,7 +158,7 @@ function startTimer(duration, callback) {
             timerElement.textContent = "Time's up!";
             if (callback) callback();
         } else {
-            timerElement.textContent = 'Time Remaining: ${timeRemaining--}s';
+            timerElement.textContent = `Time Remaining: ${timeRemaining--}s`;
         }
     }, 1000);
 }
