@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
                 const prompts = gameData.prompts
-                if (gameData.prompts > 0){
+                if (gameData.prompts.length > 0){
                     document.getElementById("prompt-display").innerHTML = prompts;
                 } else {
                     document.getElementById("prompt-display").innerHTML = "No prompts available";
