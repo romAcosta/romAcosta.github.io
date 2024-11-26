@@ -19,14 +19,16 @@ const showScreen = (id) => {
 };
 
 // Create Lobby Function
-safeAddEventListener("create-lobby-btn", "click", async () => {
-    const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser" });
-    if (data && data.gameId) {
-        sessionStorage.setItem("gameId", data.gameId); //Save gameId
-        window.location.href = "lobby.html"; // Redirect to lobby
-    } else {
-        alert("Failed to create lobby.");
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    safeAddEventListener("create-lobby-btn", "click", async () => {
+        const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser" });
+        if (data && data.gameId){
+            sessionStorage.setItem("gameID", data.gameId);
+            window.location.href = "lobby.html";
+        } else {
+            alert("Failed to create lobby.");
+        }
+    });
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
