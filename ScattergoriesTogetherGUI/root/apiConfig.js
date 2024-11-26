@@ -11,7 +11,7 @@ export const apiRequest = async (url, method = "GET", body = null) => {
         options.body = JSON.stringify(body);
     }
 
-    const response = await fetch('${API_BASE_URL}${url}', options);
+    const response = await fetch(`${API_BASE_URL}${url}`, options);
     if (!response.ok){
         throw new Error("Error: ${response.status}");
     }
