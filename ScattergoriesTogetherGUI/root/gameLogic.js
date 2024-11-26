@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Event listener for starting the game (host only)
         safeAddEventListener("start-game-btn", "click", async () => {
             try {
-                const response = await apiRequest(`/games/${gameId}/start`, "POST", gameId);
+                const response = await apiRequest(`/games/${gameId}/start`, "POST", { gameId });
                 if (response && response.success) {
                     window.location.href = "game.html";  // Redirect to game page if success
                 } else {
