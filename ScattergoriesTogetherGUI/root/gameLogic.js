@@ -34,35 +34,50 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", async () => {
     const gameId = sessionStorage.getItem("gameId");
 
-    if (window.location.pathname.includes("lobby.html"))
-    {
+    // Check if the current page is the lobby page
+    if (window.location.pathname.includes("lobby.html")) {
         if (!gameId) {
             alert("No game found. Returning to home.");
-            window.location.href = "index.html";
+            window.location.href = "index.html";  // Redirect if gameId is not found
             return;
         }
     
+        // Display game ID in the lobby page
         document.getElementById("game-id-display").textContent = gameId;
     
-        // Fetch and display players
+        // Function to fetch and display the list of players
         const refreshPlayers = async () => {
-            const players = await apiRequest(`/games/${gameId}/players`, "GET");
-            const playerList = document.getElementById("player-list");
-            playerList.innerHTML = players.map(p => '<li>${p.username}</li>').join("");
+            try {
+                const players = await apiRequest(`/games/${gameId}/players`, "GET");
+                const playerList = document.getElementById("player-list");
+                playerList.innerHTML = players.map(p => `<li>${p.username}</li>`).join(""); // Corrected string interpolation
+            } catch (error) {
+                console.error("Error fetching players:", error);
+                alert("Could not load player list. Please try again.");
+            }
         };
     
-        // Refresh every 5 seconds
+        // Refresh the player list every 5 seconds
         setInterval(refreshPlayers, 5000);
-        await refreshPlayers();
+        await refreshPlayers(); // Load players when page loads
     
-        // Start game (host only)
+        // Event listener for starting the game (host only)
         safeAddEventListener("start-game-btn", "click", async () => {
-            await apiRequest(`/games/${gameId}/start`, "POST");
-            window.location.href = "game.html"; // Redirect to game page
+            try {
+                const response = await apiRequest(`/games/${gameId}/start`, "POST");
+                if (response && response.success) {
+                    window.location.href = "game.html";  // Redirect to game page if success
+                } else {
+                    alert("Failed to start the game. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error while starting the game:", error);
+                alert("There was an issue starting the game. Please try again later.");
+            }
         });
     }
-    
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
     safeAddEventListener("join-game-submit-btn", "click", async (event) => {
