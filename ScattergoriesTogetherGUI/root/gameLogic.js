@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Function to fetch and display the list of players
         const refreshPlayers = async () => {
             try {
-                const players = await apiRequest(`/games/${gameId}/players`, "GET");
+                const players = await apiRequest(`/games/${gameId}/players`, "GET", gameId);
                 const playerList = document.getElementById("player-list");
                 playerList.innerHTML = players.map(p => `<li>${p.username}</li>`).join(""); // Corrected string interpolation
             } catch (error) {
