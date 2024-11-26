@@ -125,15 +125,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const gameData = await apiRequest(`/games/${gameId}`, "GET");
             if (gameData) {
-                document.getElementById("game-letter").textContent = 'Letter: ${gameData.currentLetter}';
-                document.getElementById("prompt-display").textContent = gameData.prompts.join("<br>");
+                document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
+
+                const prompts = gameData.prompts && gameData.prompts.length > 0
+                    ? gameData.prompts.join("<br>")
+                    : "No prompts available.";
+                document.getElementById("prompt-display").innerHTML = prompts;
+
                 startTimer(60, async () => {
-                    alert("Times's up!");
-                    window.location.href = "results.html"; // Redirect to results pade
-                });
+                    alert("Times up!");
+                })
+            } else {
+                alert("Failed to load game data. Please try again");
             }
         } catch (error) {
             console.error("Error loading game data:", error);
+            alert("Could not load game details. Please try again later.")
         }
     }
     
