@@ -123,6 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     
         try {
+            const gameRound= await apiRequest(`/games/${gameId}/startRound`, "POST")
             const gameData = await apiRequest(`/games/${gameId}`, "GET");
             if (gameData) {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
