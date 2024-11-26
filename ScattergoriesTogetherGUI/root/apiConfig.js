@@ -8,7 +8,7 @@ export const apiRequest = async (url, method = "GET", body = null) => {
         },
     };
 
-    if (body) {
+    if (body && method !== "GET" && method !== "HEAD") {
         options.body = JSON.stringify(body);
     }
 
