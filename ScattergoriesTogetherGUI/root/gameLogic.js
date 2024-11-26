@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
         // Start game (host only)
         safeAddEventListener("start-game-btn", "click", async () => {
-            await apiRequest('/games/${gameId}/start', "POST");
+            await apiRequest(`/games/${gameId}/start`, "POST");
             window.location.href = "game.html"; // Redirect to game page
         });
     }
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     
         try {
-            const gameData = await apiRequest('/games/${gameId}', "GET");
+            const gameData = await apiRequest(`/games/${gameId}`, "GET");
             if (gameData) {
                 document.getElementById("game-letter").textContent = 'Letter: ${gameData.currentLetter}';
                 document.getElementById("prompt-display").textContent = gameData.prompts.join("<br>");
