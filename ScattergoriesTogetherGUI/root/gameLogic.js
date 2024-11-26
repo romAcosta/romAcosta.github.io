@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 document.addEventListener("DOMContentLoaded", () => {
     safeAddEventListener("join-game-submit-btn", "click", async (event) => {
         event.preventDefault();
-        const gameId = document.getElementById(join-game-id).value.trim();
+        const gameId = document.getElementById("join-game-id").value.trim();
         const username = prompt("Enter your username:");
 
         const success = await apiRequest('/games/${gameId}/join', "POST", { username });
