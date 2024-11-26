@@ -85,13 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const gameId = document.getElementById("join-game-id").value.trim();
         const username = prompt("Enter your username:");
 
+        if (!gameId || !username){
+            alert("Both Game ID and Username are required to join a game.");
+            return;
+        }
+
         try {
             const success = await apiRequest(`/games/${gameId}/join`, "POST", { username });
             if (success) {
                 sessionStorage.setItem("gameId", gameId); // Save gameId
                 window.location.href = "lobby.html" // Redirect to lobby
             } else {
-                alert("Invalid Game ID. Please try again.");
+                alert("Invalid Game ID or Game is not joinable. Please try again.");
             }
         } catch (error) {
             console.error("Error while joining game:", error);
