@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const players = await apiRequest(`/games/${gameId}/players`, "GET");
                 const playerList = document.getElementById("player-list");
-                playerList.innerHTML = players.map(p => `<li>${username}</li>`).join(""); // Corrected string interpolation
+                playerList.innerHTML = players.map(player => `<li>${player}</li>`).join(""); // Corrected string interpolation
             } catch (error) {
                 console.error("Error fetching players:", error);
                 alert("Could not load player list. Please try again.");
