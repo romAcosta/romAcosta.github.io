@@ -79,7 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-    if (window.location.pathname.includes("game.html")){
+    const pageId = document.body.id; // Use the body's ID to identify the page
+    if (pageId == "game-page"){
         const gameId = sessionStorage.getItem("gameId");
         if (!gameId) {
             alert("No game found. Returning to home.");
