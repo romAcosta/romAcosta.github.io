@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     safeAddEventListener("create-lobby-btn", "click", async () => {
         const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser" });
         if (data && data.gameId){
-            sessionStorage.setItem("gameID", data.gameId);
+            sessionStorage.setItem("gameId", data.gameId);
             window.location.href = "lobby.html";
         } else {
             alert("Failed to create lobby.");
