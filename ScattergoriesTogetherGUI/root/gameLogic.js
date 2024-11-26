@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const players = await apiRequest(`/games/${gameId}/players`, "GET", { gameId });
                 const playerList = document.getElementById("player-list");
-                playerList.innerHTML = players.map(p => `<li>${p.username}</li>`).join(""); // Corrected string interpolation
+                playerList.innerHTML = players.map(p => `<li>${username}</li>`).join(""); // Corrected string interpolation
             } catch (error) {
                 console.error("Error fetching players:", error);
                 alert("Could not load player list. Please try again.");
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Event listener for starting the game (host only)
         safeAddEventListener("start-game-btn", "click", async () => {
             try {
-                const response = await apiRequest(`/games/${gameId}/start`, "POST", { gameId });
+                const response = await apiRequest(`/games/${gameId}/start`, "POST");
                 if (response && response.success) {
                     window.location.href = "game.html";  // Redirect to game page if success
                 } else {
