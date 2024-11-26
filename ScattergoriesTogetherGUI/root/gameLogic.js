@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const username = prompt("Enter your username:");
 
         try {
-            const success = await apiRequest('/games/${gameId}/join', "POST", { username });
+            const success = await apiRequest(`/games/${gameId}/join`, "POST", { username });
             if (success) {
                 sessionStorage.setItem("gameId", gameId); // Save gameId
                 window.location.href = "lobby.html" // Redirect to lobby
