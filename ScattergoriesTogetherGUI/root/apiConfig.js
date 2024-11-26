@@ -20,18 +20,21 @@ export const apiRequest = async (url, method = "GET", body = null) => {
             throw new Error(`Error: ${response.status}`);
         }
 
-        // Check if the response is JSON
-        const contentType = response.headers.get("Content-Type");
-        if (contentType && contentType.includes("application/json")) {
-            // Parse the response body as JSON
-            const json = await response.json();
-            return json;
+        // Check if the response body is empty
+        const text = await response.text();
+        if (text) {
+            // Check if the response body is JSON
+            try {
+                const json = JSON.parse(text); // Try to parse as JSON
+                return json
+            } catch (error) {
+                console.warn("Response is not JSON, returning raw text:", text);
+                return text;
+            }
         } else {
-            // If not JSON, handle non-JSON responses (e.g., plain text or empty)
-            const text = await response.text();
-            console.log("Non-JSON response:", text);
-            return text; // Or handle accordingly
+            return {};
         }
+
     } catch (error) {
         console.error("API request failed:", error);
         throw error;  // Rethrow the error to be caught in the caller
