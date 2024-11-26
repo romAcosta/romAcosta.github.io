@@ -21,9 +21,15 @@ const showScreen = (id) => {
 // Create Lobby Function
 document.addEventListener("DOMContentLoaded", () => {
     safeAddEventListener("create-lobby-btn", "click", async () => {
-        const data = await apiRequest("/games/create", "POST", { hostUsername: "defaultUser" });
+        const username = prompt("Enter your username:");
+        if (!username){
+            alert("Username is required to create a lobby.");
+            return;
+        }
+        const data = await apiRequest("/games/create", "POST", { hostUsername: username });
         if (data && data.gameId){
             sessionStorage.setItem("gameId", data.gameId);
+            sessionStorage.setItem("username", username);
             window.location.href = "lobby.html";
         } else {
             alert("Failed to create lobby.");
