@@ -31,30 +31,35 @@ safeAddEventListener("create-lobby-btn", "click", async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const gameId = sessionStorage.getItem("gameId");
-    if (!gameId) {
-        alert("No game found. Returning to home.");
-        window.location.href = "index.html";
-        return;
+
+    if (window.location.pathname.includes("lobby.html"))
+    {
+        if (!gameId) {
+            alert("No game found. Returning to home.");
+            window.location.href = "index.html";
+            return;
+        }
+    
+        document.getElementById("game-id-display").textContent = gameId;
+    
+        // Fetch and display players
+        const refreshPlayers = async () => {
+            const players = await apiRequest('/games/${gameId}/players', "GET");
+            const playerList = document.getElementById("player-list");
+            playerList.innerHTML = players.map(p => '<li>${p.username}</li>').join("");
+        };
+    
+        // Refresh every 5 seconds
+        setInterval(refreshPlayers, 5000);
+        await refreshPlayers();
+    
+        // Start game (host only)
+        safeAddEventListener("start-game-btn", "click", async () => {
+            await apiRequest('/games/${gameId}/start', "POST");
+            window.location.href = "game.html"; // Redirect to game page
+        });
     }
-
-    document.getElementById("game-id-display").textContent = gameId;
-
-    // Fetch and display players
-    const refreshPlayers = async () => {
-        const players = await apiRequest('/games/${gameId}/players', "GET");
-        const playerList = document.getElementById("player-list");
-        playerList.innerHTML = players.map(p => '<li>${p.username}</li>').join("");
-    };
-
-    // Refresh every 5 seconds
-    setInterval(refreshPlayers, 5000);
-    await refreshPlayers();
-
-    // Start game (host only)
-    safeAddEventListener("start-game-btn", "click", async () => {
-        await apiRequest('/games/${gameId}/start', "POST");
-        window.location.href = "game.html"; // Redirect to game page
-    });
+    
 });
 
 document.addEventListener("DOMContentLoaded", () => {
