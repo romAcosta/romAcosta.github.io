@@ -79,26 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const gameId = sessionStorage.getItem("gameId");
-    if (!gameId) {
-        alert("No game found. Returning to home.");
-        window.location.href = "index.html";
-        return;
-    }
-
-    try {
-        const gameData = await apiRequest('/games/${gameId}', "GET");
-        if (gameData) {
-            document.getElementById("game-letter").textContent = 'Letter: ${gameData.currentLetter}';
-            document.getElementById("prompt-display").textContent = gameData.prompts.join("<br>");
-            startTimer(60, async () => {
-                alert("Times's up!");
-                window.location.href = "results.html"; // Redirect to results pade
-            });
+    if (window.location.pathname.includes("game.html")){
+        const gameId = sessionStorage.getItem("gameId");
+        if (!gameId) {
+            alert("No game found. Returning to home.");
+            window.location.href = "index.html";
+            return;
         }
-    } catch (error) {
-        console.error("Error loading game data:", error);
+    
+        try {
+            const gameData = await apiRequest('/games/${gameId}', "GET");
+            if (gameData) {
+                document.getElementById("game-letter").textContent = 'Letter: ${gameData.currentLetter}';
+                document.getElementById("prompt-display").textContent = gameData.prompts.join("<br>");
+                startTimer(60, async () => {
+                    alert("Times's up!");
+                    window.location.href = "results.html"; // Redirect to results pade
+                });
+            }
+        } catch (error) {
+            console.error("Error loading game data:", error);
+        }
     }
+    
 });
 
 // Timer with callback
