@@ -129,7 +129,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
                 const prompts = gameData.prompts
-                document.getElementById("prompt-display").innerHTML = prompts;
+                var list = document.getElementById("prompt-list");
+                list.innerHTML = ""
+                for(var prompt of prompts){
+                    var html = "<li>" + prompt +"</li>";
+                    list.innerHTML = list.innerHTML + html;
+                }
+                //document.getElementById("prompt-display").innerHTML = prompts;
 
 
                 startTimer(60, async () => {
