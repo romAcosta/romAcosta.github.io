@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     var html = "<li>" + prompt +"</li>";
                     list.innerHTML = list.innerHTML + html;
                 }
-                document.getElementById("prompt-display").innerHTML = prompts;
+                
 
 
                 startTimer(60, async () => {
