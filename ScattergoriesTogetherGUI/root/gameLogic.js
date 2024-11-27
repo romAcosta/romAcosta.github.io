@@ -129,11 +129,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
                 const prompts = gameData.prompts
-                if (gameData.prompts.length > 0){
-                    document.getElementById("prompt-display").innerHTML = prompts;
-                } else {
-                    document.getElementById("prompt-display").innerHTML = "No prompts available";
-                }
+                document.getElementById("prompt-display").innerHTML = prompts;
+
 
                 startTimer(60, async () => {
                     alert("Times up!");
