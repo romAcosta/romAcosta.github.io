@@ -128,13 +128,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (gameData) {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
-                const prompts = gameData.prompts
+                const prompts = gameData.prompts;
                 var list = document.getElementById("prompt-list");
-                list.innerHTML = ""
-                for(var prompt of prompts){
-                    var html = "<li>" + prompt +"</li>";
-                    list.innerHTML = list.innerHTML + html;
-                }
+                list.innerHTML = "";
+                console.log(prompts);
+                // for(var prompt of prompts){
+                //     var html = "<li>" + prompt +"</li>";
+                //     list.innerHTML = list.innerHTML + html;
+                // }
                 //document.getElementById("prompt-display").innerHTML = prompts;
 
 
