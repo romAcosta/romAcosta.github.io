@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="scattergoriesTogether.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Your Profile</h1>
+            <p>Username: <span id="username"></span></p>
+            <p>Highscore: <span id="highscore"></span></p>
+            <p>Wins: <span id="wins"></span></p>
+            <button onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+        <script>
+            const username = sessionStorage.getItem("username");
+            if (!username) {
+                alert("Please log in to view your profile.");
+                window.location.href = "login.html";
+            } else {
+                fetch(`https://scattergoriestogetherapi.onrender.com/login/${username}`).then(response => response.json()).then(user => {
+                    document.getElementById("username").textContent = user.username;
+                    document.getElementById("highscore").textContent = user.recordScore || 0;
+                    document.getElementById("wins").textContent = user.numberOfWins || 0;
+                }).catch(error => console.error("Error fetching user profile:", error));
+            }
+        </script>
+    </body>
+</html>

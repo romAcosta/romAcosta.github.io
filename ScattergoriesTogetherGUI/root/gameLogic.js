@@ -1,4 +1,25 @@
 import { apiRequest } from "./apiConfig.js";
+let stompClient = null;
+
+function connectToWebSocket() {
+    const socket = new SockJS('/scattergories-websocket');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, () => {
+        console.log("Connected to Websocker!");
+
+        // Subscribe to game updates
+        const gameId = sessionStorage.getItem("gameId");
+        stompClient.subscribe(`/topic/game-updates`, (message) => {
+            const update = JSON.parse(message.body);
+            if (update.gameId === gameId) {
+                if (update.action === "start-game")  {
+                    window.location.href = "game.html";
+                }
+            }
+        });
+    });
+}
 
 // Utility function to safely add event listeners
 const safeAddEventListener = (id, event, handler) => {
@@ -21,15 +42,15 @@ const showScreen = (id) => {
 // Create Lobby Function
 document.addEventListener("DOMContentLoaded", () => {
     safeAddEventListener("create-lobby-btn", "click", async () => {
-        const username = prompt("Enter your username:");
+        const username = sessionStorage.getItem("username");
         if (!username){
-            alert("Username is required to create a lobby.");
+            alert("You need to log in to create a lobby");
+            window.location.href = "login.html";
             return;
         }
         const data = await apiRequest("/games/create", "POST", { hostUsername: username });
         if (data && data.gameId){
             sessionStorage.setItem("gameId", data.gameId);
-            sessionStorage.setItem("username", username);
             window.location.href = "lobby.html";
         } else {
             alert("Failed to create lobby.");
@@ -38,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
+    connectToWebSocket();
+    
     const gameId = sessionStorage.getItem("gameId");
 
     // Check if the current page is the lobby page
@@ -87,9 +110,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     safeAddEventListener("join-game-submit-btn", "click", async (event) => {
+        const username = sessionStorage.getItem("username");
+        if (!username) {
+            alert("You need to log in to access this page.");
+            window.location.href = "login.html";
+            return;
+        }
         event.preventDefault();
         const gameId = document.getElementById("join-game-id").value.trim();
-        const username = prompt("Enter your username:");
 
         if (!gameId || !username){
             alert("Both Game ID and Username are required to join a game.");
@@ -125,23 +153,73 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const gameRound= await apiRequest(`/games/${gameId}/startRound`, "POST")
             const gameData = await apiRequest(`/games/${gameId}`, "GET");
+            const username = sessionStorage.getItem("username");
             if (gameData) {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
                 const prompts = gameData.currentPrompts;
-                var list = document.getElementById("prompt-list");
-                list.innerHTML = "";
-                console.log(prompts);
-                for(var prompt of prompts){
-                    var html = "<li>" + prompt +"</li>";
-                    list.innerHTML = list.innerHTML + html;
-                }
-                
+                const promptContainer = document.getElementById("prompt-container");
 
+                promptContainer.innerHTML = ""; // Clear any existing content
+
+                prompts.forEach((prompt, index) => {
+                    // Create label and input for each prompt
+                    const label = document.createElement("label");
+                    label.setAttribute("for", `response-${index}`);
+                    label.textContent = prompt;
+
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.id = `response-${index}`;
+                    input.name = `response-${index}`;
+                    input.placeholder = `Enter response for "${prompt}"`;
+
+                    // Append the label and input to the container
+                    const div = document.createElement("div");
+                    div.classList.add("prompt-item");
+                    div.appendChild(label);
+                    div.appendChild(input);
+
+                    promptContainer.appendChild(div);
+                });
 
                 startTimer(60, async () => {
                     alert("Times up!");
                 })
+
+                document.getElementById("response-form").addEventListener("submit", async (event) => {
+                    event.preventDefault(); // Prevent form from refreshing the page
+
+                    const responses = [];
+                    
+                    // Gather all responses
+                    prompts.forEach((prompt, index) => {
+                        const input = document.getElementById(`response-${index}`);
+                        const answer = input.value.trim();
+                        if (answer) {
+                            responses.push({ promptText: prompt, answer });
+                        }
+                    });
+
+                    // Send each response to the server
+                    try {
+                        await Promise.all(
+                            responses.map(async ({ promptText, answer }) => {
+                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", {
+                                    username,
+                                    promptText, 
+                                    answer,
+                                });
+                            })
+                        );
+                        alert("Responses submitted successfully!");
+                    } catch (error) {
+                        console.error("Error submitting responses:", error);
+                        alert("An error occurred while submitting your responses. Please try again.");
+                    }
+
+                    console.log("Responses submitted:", responses);
+                });
             } else {
                 alert("Failed to load game data. Please try again");
             }

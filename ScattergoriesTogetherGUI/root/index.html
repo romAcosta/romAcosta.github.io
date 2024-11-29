@@ -12,11 +12,20 @@
         <h2>
             <button onclick="window.location.href='login.html'">Login</button>
             <button onclick="window.location.href='register.html'">Register</button>
-
+            <button onclick="window.location.href='profile.html'">Profile</button>
             <button id="create-lobby-btn">Create Lobby</button>
             <button onclick="window.location.href='joinLobby.html'">Join Lobby</button>
         </h2>
     </div>
+    <button onclick="logout()">Logout</button>
     <script type="module" src="gameLogic.js" defer></script>
+    <script>
+        function logout() {
+            fetch(`https://scattergoriestogetherapi.onrender.com/login/logout`, { method: "GET" }).then(() => {
+                sessionStorage.clear();
+                window.location.href = "login.html";
+            }).catch(error => console.error("Error during logout:", error));
+        }
+    </script>
 </body>
 </html>

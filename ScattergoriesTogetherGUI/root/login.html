@@ -4,20 +4,17 @@
 	<script type="text/javascript">
 
 		function login() {
-			var username = document.getElementById("username").value;
-			var password = document.getElementById("password").value;
+			const username = document.getElementById("username").value;
+			const password = document.getElementById("password").value;
 
-			var entry = {
-				"username": username,
-				"password": password,
-
-			}
-
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.open("POST", "http://localhost:8080/login");
-			xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(getCredentials()));
-			xmlHttp.setRequestHeader("Content-Type", "application/json");
-			xmlHttp.send(JSON.stringify(entry));
+			fetch(`https://scattergoriestogetherapi.onrender.com/verify/${username}/${password}`).then(response => response.text()).then(result => {
+				if (result === "Success") {
+					sessionStorage.setItem("username", username);
+					window.location.href = "index.html";
+				} else {
+					alert(result);
+				}
+			}).catch(error => console.error("Error during login:", error));
 		}
 
 	</script>
