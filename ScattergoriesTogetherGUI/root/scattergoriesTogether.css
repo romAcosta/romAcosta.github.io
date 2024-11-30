@@ -17,6 +17,56 @@ body {
     padding: 20px;
 }
 
+#podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 300px;
+    margin-top: 50px;
+}
+
+.player {
+    width: 150px;
+    margin: 0 10px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#first {
+    height: 250px;
+    background-color: #ffd700;
+}
+
+#second {
+    height: 200px;
+    background-color: #c0c0c0;
+}
+
+#third {
+    height: 150px;
+    background-color: #cd7f32;
+}
+
+.player h1, .player h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+#others {
+    margin-top: 30px;
+}
+
+#player-list {
+    list-style: none;
+    padding: 0;
+}
+
+#player-list li {
+    margin: 5px 0;
+}
+
 .centered {
     text-align: center;
 }

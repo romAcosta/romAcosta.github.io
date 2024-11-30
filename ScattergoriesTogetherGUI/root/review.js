@@ -1,7 +1,12 @@
 import { apiRequest } from "./apiConfig.js";
 
 const gameId = sessionStorage.getItem("gameId");
-const round = sessionStorage.getItem("currentRound");
+const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
+let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
+
+// Constants
+const TOTAL_PROMPTS_PER_ROUND = 12;
+const TOTAL_ROUNDS = 3;
 
 async function fetchResponses(prompt) {
     try {
@@ -14,18 +19,104 @@ async function fetchResponses(prompt) {
 
 function displayResponses(responses) {
     const responseList = document.getElementById("responses-list");
+    const promptText = document.getElementById("prompt-text");
+    const scoresSection = document.getElementById("scores-section");
+
     responseList.innerHTML = ""; // Clear previous responses
+    scoresSection.innerHTML = ""; // Clear previous scores
+
+    // Display the prompt text
+    const currentPrompt = sessionStorage.getItem("currentPrompt");
+    promptText.textContent = `Prompt: ${currentPrompt}`;
+
+    // Iterate over responses and display each user's answer
     responses.forEach(res => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <strong>${res.userId}</strong>: ${res.answer}
-            <button onclick="startVote('${res.id}')">Start Vote</button>
+            <div class="response-item">
+                <h3>${res.username}</h3>
+                <p>${res.answer}</p>
+            </div>
         `;
         if (!res.valid) {
             li.style.textDecoration = "line through";
         }
         responseList.appendChild;
-    })
+    });
+
+    // Automatically move to show scores after a pause
+    setTimeout(() => {
+        displayScores(responses);
+    }, 5000); // 5-second pause for reading responses
+}
+
+function displayScores(responses) {
+    const scoresSection = document.getElementById("scores-section");
+
+    // Iterate over responses to display scores
+    responses.forEach(res => {
+        const scoreRow = document.createElement("div");
+        scoreRow.className = "score-row";
+        scoreRow.innerHTML = `
+            <span class="username">${res.username}</span>
+            <span class="score">${res.score} points</span>
+        `;
+        scoresSection.appendChild(scoreRow);
+    });
+
+    // Move to the next prompt or round
+    setTimeout(() => {
+        moveToNextPromptOrRound();
+    }, 5000);
+}
+
+function moveToNextPromptOrRound() {
+    currentPromptIndex++;
+
+    // Check if the current round's prompts are completed
+    if (currentPromptIndex >= TOTAL_PROMPTS_PER_ROUND) {
+        currentPromptIndex = 0;
+        round++;
+
+        // Check if all rounds are completed
+        if (round > TOTAL_ROUNDS) {
+            // End the game and display final results
+            displayEndGame();
+            return;
+        } else {
+            // Treansition to the next round
+            sessionStorage.setItem("currentRound", round);
+            sessionStorage.setItem("currentPromptIndex", currentPromptIndex);
+            alert(`Round ${currentRound - 1} complete! Starting Round ${currentRound}...`);
+            window.location.href = "game.html";
+        }
+    } else {
+        sessionStorage.setItem("currentPromptIndex", currentPromptIndex);
+    }
+
+    // Reload the page for the next prompt
+    loadPrompt();
+}
+
+// End the game and display final results
+function displayEndGame() {
+    const promptText = document.getElementById("propmt-text");
+    const responseList = document.getElementById("responses-list");
+    const scoresSection = document.getElementById("scores-section");
+    const nextRoundBtn = document.getElementById("next-round-btn");
+
+    promptText.textContent = "Game Over! Final Results:";
+    responseList.innerHTML = "";
+    scoresSection.innerHTML = "";
+}
+
+// Load the prompt and its responses
+async function loadPrompt() {
+    const currentPrompt = sessionStorage.getItem("currentPrompt");
+    const responses = await fetchResponses(currentPrompt);
+    if (responses) {
+        displayResponses(responses);
+    }
 }
 
 async function startVote(responseId) {
@@ -37,24 +128,20 @@ async function startVote(responseId) {
     }
 }
 
-document.getElementById("next-prompt-btn").addEventListener("click", async () => {
+// Event listener for moving to the next round
+document.getElementById("next-round-btn").addEventListener("click", async () => {
     try {
-        await apiRequest(`/games/${gameId}/nextPrompt`, "POST");
-        loadPrompt();
+        await apiRequest(`/games/${gameId}/nextRound`, "POST");
+        if (round == 3){
+            window.location.href = "winner.htl";
+        } else {
+            // Lood the next prompt 
+            sessionStorage.setItem("currentRound", parseInt(round, 10) + 1);
+        }
     } catch (error) {
-        console.error("Error moving to next prompt:". error);
+        console.error("Error advancing to next round", error);
     }
-});
-
-async function loadPrompt() {
-    const currentPrompt = sessionStorage.getItem("currentPrompt");
-    const response = await fetchResponses(currentPrompt);
-    displayResponses(response);
-
-    setTimeout(() => {
-        document.getElementById("nest-prompt-btn").disabled = false;
-    }, 3000);
-}
+})
 
 document.addEventListener("DOMContentLoaded", () => {
     loadPrompt();
