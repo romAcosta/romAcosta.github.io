@@ -81,8 +81,7 @@ function moveToNextPromptOrRound() {
         // Check if all rounds are completed
         if (round > TOTAL_ROUNDS) {
             // End the game and display final results
-            displayEndGame();
-            return;
+            window.location.href = "results.html";
         } else {
             // Treansition to the next round
             sessionStorage.setItem("currentRound", round);
@@ -96,18 +95,6 @@ function moveToNextPromptOrRound() {
 
     // Reload the page for the next prompt
     loadPrompt();
-}
-
-// End the game and display final results
-function displayEndGame() {
-    const promptText = document.getElementById("propmt-text");
-    const responseList = document.getElementById("responses-list");
-    const scoresSection = document.getElementById("scores-section");
-    const nextRoundBtn = document.getElementById("next-round-btn");
-
-    promptText.textContent = "Game Over! Final Results:";
-    responseList.innerHTML = "";
-    scoresSection.innerHTML = "";
 }
 
 // Load the prompt and its responses
