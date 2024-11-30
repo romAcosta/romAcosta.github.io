@@ -1,4 +1,6 @@
 import { apiRequest } from "./apiConfig.js";
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 let stompClient = null;
 
 function connectToWebSocket() {
@@ -60,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     connectToWebSocket();
-    
+
     const gameId = sessionStorage.getItem("gameId");
 
     // Check if the current page is the lobby page
