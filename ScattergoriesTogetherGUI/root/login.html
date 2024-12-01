@@ -4,10 +4,11 @@
 	<script type="text/javascript">
 
 		function login() {
+			import { apiRequest } from "./apiConfig.js"
 			const username = document.getElementById("username").value;
 			const password = document.getElementById("password").value;
 
-			const url = `https://scattergoriestogetherapi.onrender.com/verify/${encodeURIComponent(username)}/${encodeURIComponent(password)}`;
+			const url = apiRequest(`/login/verify/${username}/${password}`);
 
 			fetch(url)
 				.then(response => response.text())
