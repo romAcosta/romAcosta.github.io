@@ -4,22 +4,24 @@
 	<script type="module">
 		import { apiRequest } from "./apiConfig.js"
 
-		function login() {
+		async function login() {
 			const username = document.getElementById("username").value;
 			const password = document.getElementById("password").value;
 
-			const url = apiRequest(`/login/verify/${username}/${password}`);
+			try {
+				const url = await apiRequest(`/login/verify/${username}/${password}`);
+				const response = await fetch(url);
+				const result = await response.text();
 
-			fetch(url)
-				.then(response => response.text())
-				.then(result => {
-					if (result === "Success") {
-						sessionStorage.setItem("username", username);
-						window.location.href = "index.html";
-					} else {
-						alert(result);
-					}
-			}).catch(error => console.error("Error during login:", error));
+				if (result === "Success") {
+					sessionStorage.setItem("username", username);
+					window.location.href = "index.html";
+				} else {
+					alert(result);
+				}
+			} catch (error) {
+				console.error("Error during login:", error);
+			}
 		}
 
 		document.addEventListener("DOMContentLoaded", () => {
