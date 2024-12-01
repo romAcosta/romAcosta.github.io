@@ -22,7 +22,10 @@
 			}).catch(error => console.error("Error during login:", error));
 		}
 
-		window.login = login;
+		document.addEventListener("DOMContentLoaded", () => {
+			document.getElementById("login-btn").addEventListener("click", login);
+		});
+
 	</script>
 	<link rel="stylesheet" href="scattergoriesTogether.css">
 </head>
@@ -39,7 +42,7 @@
 		<input type="password" id="password" placeholder="Enter Password" required>
 
 		<h1>
-			<button onclick="login();">Login</button>
+			<button id="login-btn">Login</button>
 
 			<button onclick="window.location.href='register.html'">To Register</button>
 		</h1>
