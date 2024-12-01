@@ -4,7 +4,7 @@ import { Stomp } from 'https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles
 let stompClient = null;
 
 function connectToWebSocket() {
-    const socket = new SockJS('/scattergories-websocket');
+    const socket = new SockJS('https://scattergoriestogetherapi.onrender.com/scattergories-websocket');
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, () => {
