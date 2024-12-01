@@ -5,23 +5,26 @@
 		import { apiRequest } from "./apiConfig.js"
 
 		async function login() {
-			const username = document.getElementById("username").value;
-			const password = document.getElementById("password").value;
+			const loginButton = document.getElementById("login-btn");
+			loginButton.addEventListener("click", async () => {
+				const username = document.getElementById("username").value;
+				const password = document.getElementById("password").value;
 
-			try {
-				const url = await apiRequest(`/login/verify/${username}/${password}`);
-				const response = await fetch(url);
-				const result = await response.text();
+				try {
+					const result = await apiRequest(`/login/verify/${username}/${password}`);
 
-				if (result === "Success") {
-					sessionStorage.setItem("username", username);
-					window.location.href = "index.html";
-				} else {
-					alert(result);
+					if (result === "Success") {
+						sessionStorage.setItem("username", username);
+						window.location.href = "index.html";
+					} else {
+						alert(result);
+					}
+				} catch (error) {
+					console.error("Error during login:", error);
+					alert("An error occurred. Please try again later")
 				}
-			} catch (error) {
-				console.error("Error during login:", error);
-			}
+				})
+			
 		}
 
 		document.addEventListener("DOMContentLoaded", () => {
