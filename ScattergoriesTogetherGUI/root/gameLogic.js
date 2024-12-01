@@ -12,8 +12,8 @@ function connectToWebSocket(gameId) {
 
     const socket = new SockJS('https://scattergoriestogetherapi.onrender.com/scattergories-websocket');
     stompClient = new Client({
-        webSocketFactory: () => socket;
-        debug: (str) => console.log(str);
+        webSocketFactory: () => socket,
+        debug: (str) => console.log(str)
     });
 
     stompClient.onConnnect = () => {
