@@ -1,6 +1,6 @@
 import { apiRequest } from "./apiConfig.js";
 import { Stomp } from "./stomp.umd.min.js";
-import SockJS from "./sockjs.min.js";
+import SockJS from 'https://esm.sh/sockjs-client@1.5.1';
 
 let stompClient = null;
 
