@@ -7,13 +7,17 @@
 			const username = document.getElementById("username").value;
 			const password = document.getElementById("password").value;
 
-			fetch(`https://scattergoriestogetherapi.onrender.com/verify/${username}/${password}`).then(response => response.text()).then(result => {
-				if (result === "Success") {
-					sessionStorage.setItem("username", username);
-					window.location.href = "index.html";
-				} else {
-					alert(result);
-				}
+			const url = `https://scattergoriestogetherapi.onrender.com/verify/${encodeURIComponent(username)}/${encodeURIComponent(password)}`;
+
+			fetch(url)
+				.then(response => response.text())
+				.then(result => {
+					if (result === "Success") {
+						sessionStorage.setItem("username", username);
+						window.location.href = "index.html";
+					} else {
+						alert(result);
+					}
 			}).catch(error => console.error("Error during login:", error));
 		}
 
