@@ -1,9 +1,15 @@
 import { apiRequest } from "./apiConfig.js";
 import SockJS from 'https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js';
 import { Stomp } from 'https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.esm.min.js';
+
 let stompClient = null;
 
-function connectToWebSocket() {
+function connectToWebSocket(gameId) {
+    if (!gameId) {
+        console.error("No gameId provided. Cannot connect to Websocket.")
+        return;
+    }
+
     const socket = new SockJS('https://scattergoriestogetherapi.onrender.com/scattergories-websocket');
     stompClient = Stomp.over(socket);
 
@@ -11,7 +17,6 @@ function connectToWebSocket() {
         console.log("Connected to Websocker!");
 
         // Subscribe to game updates
-        const gameId = sessionStorage.getItem("gameId");
         stompClient.subscribe(`/topic/game-updates`, (message) => {
             const update = JSON.parse(message.body);
             if (update.gameId === gameId) {
@@ -61,9 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-    connectToWebSocket();
-
     const gameId = sessionStorage.getItem("gameId");
+
+    connectToWebSocket(gameId);
 
     // Check if the current page is the lobby page
     if (window.location.pathname.includes("lobby.html")) {
@@ -151,6 +156,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             window.location.href = "index.html";
             return;
         }
+
+        connectToWebSocket(gameId);
     
         try {
             const gameRound= await apiRequest(`/games/${gameId}/startRound`, "POST")
