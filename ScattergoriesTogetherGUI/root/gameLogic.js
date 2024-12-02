@@ -1,5 +1,5 @@
 import { apiRequest } from "./apiConfig.js";
-import { Client } from './stomp.umd.min.js';
+import { Stomp } from './stomp.umd.min.js';
 import SockJS from 'https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js';
 
 let stompClient = null;
