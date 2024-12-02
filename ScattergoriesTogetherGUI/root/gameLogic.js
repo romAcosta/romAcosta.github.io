@@ -1,7 +1,7 @@
 import { apiRequest } from "./apiConfig.js";
 import "./stomp.umd.min.js"
 
-let stompClient = null;
+let websocket = null;
 
 function connectToWebSocket(gameId) {
     if (!gameId) {
@@ -9,21 +9,37 @@ function connectToWebSocket(gameId) {
         return;
     }
 
-    const socket = new SockJS('https://scattergoriestogetherapi.onrender.com/scattergories-websocket');
-    stompClient = Stomp.over(socket);
+    const websocket = new WebSocket('https://scattergoriestogetherapi.onrender.com/scattergories-websocket');
 
-    stompClient.connect({}, () => {
-        console.log("Connected to Websocket!");
+    websocket.onopen = () => {
+        console.log("Websocket connection established.");
 
-        stompClient.subscribe(`/topic/game-updates`, (message) => {
-            const update = JSON.parse(message.body);
-            if (update.gameId === gameId) {
-                if (update.action === "start-game") {
-                    window.location.href = "game.html";
-                }
+        const connectMessage = JSON.stringify({ action: "connect", gameId });
+        websocket.send(connectMessage);
+        console.log("Sent connection message:", connectMessage);
+    };
+
+    websocket.onmessage = (event) => {
+        console.log("WebSocket message recieved:", event.data);
+        const message = JSON.parse(event.data);
+
+        if (message.gameId === gameId) {
+            if (message.action === "start-game") {
+                window.location.href = "game.html";
             }
-        });
-    });
+        }
+    };
+
+    websocket.onerror = (error) => {
+        console.error("Websocket error occurred:", error);
+        alert("An error occurred with the WebSocket connection. Please try again later.");
+    };
+
+    websocket.onclose = (event) => {
+        console.log("Websocket connection closed:", event);
+        alert("Disconnected from the server. Please refresh the page.");
+    }
+    
 
 }
 
