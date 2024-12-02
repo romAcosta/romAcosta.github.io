@@ -1,5 +1,5 @@
 import { apiRequest } from "./apiConfig.js";
-import { Stomp } from "./stomp.umd.min.js"
+import "./stomp.umd.min.js"
 
 let stompClient = null;
 
