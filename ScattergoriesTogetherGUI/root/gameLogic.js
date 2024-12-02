@@ -1,6 +1,6 @@
 import { apiRequest } from "./apiConfig.js";
-import { Client } from 'https://unpkg.com/@stomp/stompjs@6.1.2/esm5/stomp.min.js';
-import SockJS from 'https://esm.sh/sockjs-client@1.5.1';
+import { Client } from 'https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/umd/stomp.umd.min.js';
+import SockJS from 'https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js';
 
 let stompClient = null;
 
@@ -11,26 +11,21 @@ function connectToWebSocket(gameId) {
     }
 
     const socket = new SockJS('https://scattergoriestogetherapi.onrender.com/scattergories-websocket');
-    stompClient = new Client({
-        webSocketFactory: () => socket,
-        debug: (str) => console.log(str)
-    });
+    stompClient = Stomp.over(socket);
 
-    stompClient.onConnnect = () => {
-        console.log("Connected to WebSocket!");
+    stompClient.connect({}, () => {
+        console.log("Connected to Websocket!");
+
         stompClient.subscribe(`/topic/game-updates`, (message) => {
             const update = JSON.parse(message.body);
             if (update.gameId === gameId) {
-                if (update.action === "start-game"){
+                if (update.action === "start-game") {
                     window.location.href = "game.html";
                 }
             }
         });
-    };
+    });
 
-    stompClient.onStompError = (frame) => {
-        console.error("STOMP error:", frame.headers["message"]);;
-    }
 }
 
 // Utility function to safely add event listeners
