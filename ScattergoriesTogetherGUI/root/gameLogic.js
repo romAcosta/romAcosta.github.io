@@ -233,13 +233,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     // Send each response to the server
                     try {
-                        await Promise.all(
-                            responses.map(async (response) => {
-
-                                console.log("Payload for submission:", response); // Log individual payload
-                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", response);
-                            })
-                        );
+                        await apiRequest(`/games/${gameId}/submitResponse`, "POST", responses);
                         alert("Responses submitted successfully!");
                     } catch (error) {
                         console.error("Error submitting responses:", error);
