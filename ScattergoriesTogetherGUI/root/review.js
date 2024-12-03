@@ -132,9 +132,15 @@ async function loadPrompt() {
     const currentPrompt = prompts.at(currentPromptIndex);
     console.log("Current Prompt:", currentPrompt);
     const responses = await fetchResponses(currentPrompt);
-    console.log("Responses fetched");
-    if (responses) {
+    console.log("Responses fetched:", responses);
+    if (responses && Array.isArray(responses) && responses.length > 0) {
         displayResponses(responses);
+    } else {
+        console.error("No valid responses to display:", responses);
+        const responseList = document.getElementById("responses-list");
+        if (responseList) {
+            responseList.innerHTML = "<p>No responses found for this prompt.</p>";
+        }
     }
 }
 
