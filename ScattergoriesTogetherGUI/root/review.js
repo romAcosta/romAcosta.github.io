@@ -3,6 +3,7 @@ import { apiRequest } from "./apiConfig.js";
 const gameId = sessionStorage.getItem("gameId");
 const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
 let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
+const prompts = sessionStorage.getItem("currentPrompts")
 
 function initializePage() {
     if (!gameId || !currentPromptIndex) {
@@ -39,7 +40,7 @@ function displayResponses(responses) {
     scoresSection.innerHTML = ""; // Clear previous scores
 
     // Display the prompt text
-    const currentPrompt = sessionStorage.getItem("currentPrompt");
+    const currentPrompt = prompts.at(currentPromptIndex);
     promptText.textContent = `Prompt: ${currentPrompt}`;
 
     // Iterate over responses and display each user's answer
@@ -151,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (round === null) {
         round = 1;
     }
-    
+
     console.log("Session Storage Values:", {
         gameId: sessionStorage.getItem("gameId"),
         currentRound : sessionStorage.getItem("currentRound"),

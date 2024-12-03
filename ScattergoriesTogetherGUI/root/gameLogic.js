@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const response = await apiRequest(`/games/${gameId}/start`, "POST");
                 if (response && response.success) {
+                    sessionStorage.setItem("currentRound", 1);
                     window.location.href = "game.html";  // Redirect to game page if success
                 } else {
                     alert("Failed to start the game. Please try again.");
@@ -183,6 +184,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
                 const prompts = gameData.currentPrompts;
+                sessionStorage.setItem("currentPrompts", prompts);
                 const promptContainer = document.getElementById("prompt-container");
 
                 promptContainer.innerHTML = ""; // Clear any existing content
