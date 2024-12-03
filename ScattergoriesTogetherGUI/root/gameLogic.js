@@ -227,11 +227,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     try {
                         await Promise.all(
                             responses.map(async ({ promptText, answer }) => {
-                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", {
-                                    username,
-                                    promptText, 
-                                    answer,
-                                });
+                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", responses);
                             })
                         );
                         alert("Responses submitted successfully!");
