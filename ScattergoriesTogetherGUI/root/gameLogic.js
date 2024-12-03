@@ -214,20 +214,26 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("response-form").addEventListener("submit", async (event) => {
                     event.preventDefault(); // Prevent form from refreshing the page
 
-                    const responses = [];
-                    
-                    // Gather all responses
-                    prompts.forEach((prompt, index) => {
+                    const responses = prompts.map((promt, index) => {
                         const input = document.getElementById(`response-${index}`);
-                        const answer = input.value.trim();
-                        responses.push({ promptText: prompt, answer });
+                        const answer = input ? input.value.trim() : null; // Allow empty responses
+                        return { promptText: prompt, answer };
                     });
+                    
+                    console.log("Submitting responses:", responses);
+                    
 
                     // Send each response to the server
                     try {
                         await Promise.all(
                             responses.map(async ({ promptText, answer }) => {
-                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", responses);
+                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", {
+                                    gameId,
+                                    username,
+                                    promptText,
+                                    answer,
+                                    round: gameRound,
+                                });
                             })
                         );
                         alert("Responses submitted successfully!");
