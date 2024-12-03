@@ -218,10 +218,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const responses = prompts.map((promt, index) => {
                         const input = document.getElementById(`response-${index}`);
                         const answer = input ? input.value.trim() : null; // Allow empty responses
+                        const validPromptText = String(prompt);
                         return { 
                             gameId,
                             username,
-                            promptText: prompt,
+                            promptText: validPromptText,
                             answer,
                             round: currentRound,
                          };
