@@ -2,7 +2,7 @@ import { apiRequest } from "./apiConfig.js";
 
 const gameId = sessionStorage.getItem("gameId");
 const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
-let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
+let currentPromptIndex = 0;
 const prompts = sessionStorage.getItem("currentPrompts")
 
 function initializePage() {
