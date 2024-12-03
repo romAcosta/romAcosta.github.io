@@ -132,6 +132,7 @@ async function loadPrompt() {
     const currentPrompt = prompts.at(currentPromptIndex);
     console.log("Current Prompt:", currentPrompt);
     const responses = await fetchResponses(currentPrompt);
+    console.log("Responses fetched");
     if (responses) {
         displayResponses(responses);
     }
