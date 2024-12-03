@@ -4,6 +4,12 @@ const gameId = sessionStorage.getItem("gameId");
 const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
 let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
 
+if (!gameId || !currentPromptIndex) {
+    console.error("Critical session storage values missing:", { gameId, currentPromptIndex });
+    document.getElementById("prompt-text").textContent = "Error: Required game information is missing.";
+    return;
+}
+
 // Constants
 const TOTAL_PROMPTS_PER_ROUND = 12;
 const TOTAL_ROUNDS = 3;
@@ -131,5 +137,13 @@ document.getElementById("next-round-btn").addEventListener("click", async () => 
 })
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("Review page script loaded."); //Debug log
+    console.log("Session Storage Values:", {
+        gameId: sessionStorage.getItem("gameId"),
+        currentRound : sessionStorage.getItem("currentRound"),
+        currentPromptIndex: sessionStorage.getItem("currentPromptIndex"),
+        currentPrompt: sessionStorage.getItem("currentPrompt"),
+    });
+
     loadPrompt();
 })
