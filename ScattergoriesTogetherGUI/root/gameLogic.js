@@ -227,13 +227,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     try {
                         await Promise.all(
                             responses.map(async ({ promptText, answer }) => {
-                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", {
+                                const payload = {
                                     gameId,
                                     username,
                                     promptText,
                                     answer,
                                     round: gameRound,
-                                });
+                                };
+
+                                console.log("Payload for submission:", payload); // Log individual payload
+                                await apiRequest(`/games/${gameId}/submitResponse`, "POST", payload);
                             })
                         );
                         alert("Responses submitted successfully!");
