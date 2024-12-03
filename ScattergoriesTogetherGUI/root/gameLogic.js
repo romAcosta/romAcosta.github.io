@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("response-form").addEventListener("submit", async (event) => {
                     event.preventDefault(); // Prevent form from refreshing the page
 
-                    const responses = prompts.map((promt, index) => {
+                    const responses = prompts.map((prompt, index) => {
                         const input = document.getElementById(`response-${index}`);
                         const answer = input ? input.value.trim() : null; // Allow empty responses
                         const validPromptText = String(prompt);
