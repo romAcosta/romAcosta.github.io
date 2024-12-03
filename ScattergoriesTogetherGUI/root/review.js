@@ -145,6 +145,13 @@ document.getElementById("next-round-btn").addEventListener("click", async () => 
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Review page script loaded."); //Debug log
+    if (currentPromptIndex === null) {
+        currentPromptIndex = 0;
+    }
+    if (round === null) {
+        round = 1;
+    }
+    
     console.log("Session Storage Values:", {
         gameId: sessionStorage.getItem("gameId"),
         currentRound : sessionStorage.getItem("currentRound"),
