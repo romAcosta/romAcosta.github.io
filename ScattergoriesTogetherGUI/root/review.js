@@ -8,6 +8,8 @@ let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 
 const prompts = sessionStorage.getItem("currentPrompts")
 
 function initializePage() {
+    console.log("Initializing the page...");
+
     if (gameId === null || currentPromptIndex === null) {
         console.error("Critical session storage values missing:", { gameId, currentPromptIndex });
         const promptTextElement = document.getElementById("prompt-text");
@@ -67,6 +69,8 @@ function displayResponses(responses) {
 }
 
 function displayScores(responses) {
+    console.log("Displaying responses...");
+
     const scoresSection = document.getElementById("scores-section");
 
     // Iterate over responses to display scores
@@ -115,7 +119,8 @@ function moveToNextPromptOrRound() {
 
 // Load the prompt and its responses
 async function loadPrompt() {
-    const currentPrompt = sessionStorage.getItem("currentPrompt");
+    console.log("Loading prompt...");
+    const currentPrompt = prompts.at(currentPromptIndex);
     const responses = await fetchResponses(currentPrompt);
     if (responses) {
         displayResponses(responses);
