@@ -5,7 +5,7 @@ sessionStorage.setItem("currentPromptIndex", 0);
 const gameId = sessionStorage.getItem("gameId");
 const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
 let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
-const prompts = sessionStorage.getItem("currentPrompts")
+const prompts = JSON.parse(sessionStorage.getItem("currentPrompts")) || [];
 
 function initializePage() {
     console.log("Initializing the page...");
@@ -15,6 +15,15 @@ function initializePage() {
         const promptTextElement = document.getElementById("prompt-text");
         if (promptTextElement) {
             promptTextElement.textContent = "Error: required game information is missing.";
+        }
+        return;
+    }
+
+    if (!Array.isArray(prompts) || prompts.length === 0) {
+        console.error("Prompts data is missing or invalid:", prompts);
+        const promptTextElement = document.getElementById("prompt-text");
+        if (promptTextElement) {
+            promptTextElement.textContent = "Error: No prompts available.";
         }
         return;
     }

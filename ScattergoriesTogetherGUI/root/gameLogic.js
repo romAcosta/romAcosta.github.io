@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
 
                 const prompts = gameData.currentPrompts;
-                sessionStorage.setItem("currentPrompts", prompts);
+                sessionStorage.setItem("currentPrompts", JSON.stringify(prompts));
                 const promptContainer = document.getElementById("prompt-container");
 
                 promptContainer.innerHTML = ""; // Clear any existing content
