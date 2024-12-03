@@ -121,6 +121,7 @@ function moveToNextPromptOrRound() {
 async function loadPrompt() {
     console.log("Loading prompt...");
     const currentPrompt = prompts.at(currentPromptIndex);
+    console.log("Current Prompt:", currentPrompt);
     const responses = await fetchResponses(currentPrompt);
     if (responses) {
         displayResponses(responses);
