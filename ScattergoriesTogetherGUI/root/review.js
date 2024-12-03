@@ -4,10 +4,17 @@ const gameId = sessionStorage.getItem("gameId");
 const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
 let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
 
-if (!gameId || !currentPromptIndex) {
-    console.error("Critical session storage values missing:", { gameId, currentPromptIndex });
-    document.getElementById("prompt-text").textContent = "Error: Required game information is missing.";
-    return;
+function initializePage() {
+    if (!gameId || !currentPromptIndex) {
+        console.error("Critical session storage values missing:", { gameId, currentPromptIndex });
+        const promptTextElement = document.getElementById("prompt-text");
+        if (promptTextElement) {
+            promptTextElement.textContent = "Error: required game information is missing.";
+        }
+        return;
+    }
+
+    loadPrompt();
 }
 
 // Constants
@@ -145,5 +152,5 @@ document.addEventListener("DOMContentLoaded", () => {
         currentPrompt: sessionStorage.getItem("currentPrompt"),
     });
 
-    loadPrompt();
+    initializePage();
 })
