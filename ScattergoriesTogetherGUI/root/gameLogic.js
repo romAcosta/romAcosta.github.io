@@ -177,6 +177,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const gameRound= await apiRequest(`/games/${gameId}/startRound`, "POST")
             const gameData = await apiRequest(`/games/${gameId}`, "GET");
+            const currentRound = 1;
             const username = sessionStorage.getItem("username");
             if (gameData) {
                 document.getElementById("game-letter").textContent = `Letter: ${gameData.currentLetter || "N/A"}`;
@@ -222,7 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             username,
                             promptText: prompt,
                             answer,
-                            round: gameRound,
+                            round: currentRound,
                          };
                     });
                     
