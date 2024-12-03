@@ -220,9 +220,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     prompts.forEach((prompt, index) => {
                         const input = document.getElementById(`response-${index}`);
                         const answer = input.value.trim();
-                        if (answer) {
-                            responses.push({ promptText: prompt, answer });
-                        }
+                        responses.push({ promptText: prompt, answer });
                     });
 
                     // Send each response to the server
