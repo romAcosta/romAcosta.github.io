@@ -215,13 +215,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("response-form").addEventListener("submit", async (event) => {
                     event.preventDefault(); // Prevent form from refreshing the page
 
+                    const userId = sessionStorage.getItem("username");
+                    if (!userId) {
+                        alert("User ID is missing. Please log in again.");
+                        window.location.href = "login.html";
+                        return;
+                    }
+
                     const responses = prompts.map((prompt, index) => {
                         const input = document.getElementById(`response-${index}`);
-                        const answer = input ? input.value.trim() : null; // Allow empty responses
+                        const answer = input ? input.value.trim() : ""; // Allow empty responses
                         const validPromptText = typeof prompt === "string" ? prompt : String(prompt);
                         return { 
                             gameId,
-                            username,
+                            userId,
                             promptText: validPromptText,
                             answer,
                             round: currentRound,
