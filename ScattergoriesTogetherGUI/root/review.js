@@ -40,9 +40,11 @@ async function fetchResponses(prompt) {
         console.log("Fetching responses for prompt:", prompt);
         const response = await apiRequest(`/games/${gameId}/round/${round}/prompt/${prompt}/responses`, "GET");
         console.log("Raw API response:", response);
-        return response.data;
+        return Array.isArray(response) ? response : response?.data || [];
+        console.error("Error fetching responses:", error);
     } catch (error) {
         console.error("Error fetching responses:", error);
+        return [];
     }
 }
 
@@ -133,8 +135,10 @@ async function loadPrompt() {
     console.log("Loading prompt...");
     const currentPrompt = prompts.at(currentPromptIndex);
     console.log("Current Prompt:", currentPrompt);
+
     const responses = await fetchResponses(currentPrompt);
     console.log("Responses fetched:", responses);
+    
     if (responses && Array.isArray(responses) && responses.length > 0) {
         displayResponses(responses);
     } else {
