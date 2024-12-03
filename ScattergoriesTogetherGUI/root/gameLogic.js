@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const responses = prompts.map((prompt, index) => {
                         const input = document.getElementById(`response-${index}`);
                         const answer = input ? input.value.trim() : null; // Allow empty responses
-                        const validPromptText = String(prompt);
+                        const validPromptText = typeof prompt === "string" ? prompt : String(prompt);
                         return { 
                             gameId,
                             username,
@@ -228,10 +228,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                          };
                     });
                     
-                    console.log("Submitting responses:", responses);
+                    console.log("Payload being submitted", JSON.stringify(responses, null, 2));
                     
-
-                    // Send each response to the server
                     try {
                         await apiRequest(`/games/${gameId}/submitResponse`, "POST", responses);
                         alert("Responses submitted successfully!");
