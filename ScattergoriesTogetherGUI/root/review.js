@@ -37,7 +37,9 @@ const TOTAL_ROUNDS = 3;
 
 async function fetchResponses(prompt) {
     try {
+        console.log("Fetching responses for prompt:", prompt);
         const response = await apiRequest(`/games/${gameId}/round/${round}/prompt/${prompt}/responses`, "GET");
+        console.log("Raw API response:", response);
         return response.data;
     } catch (error) {
         console.error("Error fetching responses:", error);
