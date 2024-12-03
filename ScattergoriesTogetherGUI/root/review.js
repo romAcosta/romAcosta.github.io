@@ -41,7 +41,7 @@ function displayResponses(responses) {
         if (!res.valid) {
             li.style.textDecoration = "line through";
         }
-        responseList.appendChild;
+        responseList.appendChild(li);
     });
 
     // Automatically move to show scores after a pause
@@ -86,7 +86,7 @@ function moveToNextPromptOrRound() {
             // Treansition to the next round
             sessionStorage.setItem("currentRound", round);
             sessionStorage.setItem("currentPromptIndex", currentPromptIndex);
-            alert(`Round ${currentRound - 1} complete! Starting Round ${currentRound}...`);
+            alert(`Round ${round - 1} complete! Starting Round ${round}...`);
             window.location.href = "game.html";
         }
     } else {
@@ -108,7 +108,7 @@ async function loadPrompt() {
 
 async function startVote(responseId) {
     try {
-        await apiRequest((`/games/${gameId}/responses/${responseId}/validate`, "POST", { isValid: false }));
+        await apiRequest(`/games/${gameId}/responses/${responseId}/validate`, "POST", { isValid: false });
         alert("Vote started for this response.")
     } catch (error) {
         console.error("Error starting vote:", error);
