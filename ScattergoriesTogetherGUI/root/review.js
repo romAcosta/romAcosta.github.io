@@ -1,8 +1,10 @@
 import { apiRequest } from "./apiConfig.js";
 
+sessionStorage.setItem("currentPromptIndex", 0);
+
 const gameId = sessionStorage.getItem("gameId");
 const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
-let currentPromptIndex = 0;
+let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
 const prompts = sessionStorage.getItem("currentPrompts")
 
 function initializePage() {
@@ -157,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
         gameId: sessionStorage.getItem("gameId"),
         currentRound : sessionStorage.getItem("currentRound"),
         currentPromptIndex: sessionStorage.getItem("currentPromptIndex"),
-        currentPrompt: sessionStorage.getItem("currentPrompt"),
     });
 
     initializePage();
