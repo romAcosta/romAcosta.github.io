@@ -246,6 +246,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
 
                     console.log("Responses submitted:", responses);
+                    window.location.href = "results.html";
                 });
             } else {
                 alert("Failed to load game data. Please try again");
