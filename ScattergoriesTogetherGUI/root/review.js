@@ -3,7 +3,7 @@ import { apiRequest } from "./apiConfig.js";
 sessionStorage.setItem("currentPromptIndex", 0);
 
 const gameId = sessionStorage.getItem("gameId");
-const round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
+let round = parseInt(sessionStorage.getItem("currentRound"), 10) || 1;
 let currentPromptIndex = parseInt(sessionStorage.getItem("currentPromptIndex"), 10) || 0;
 const prompts = JSON.parse(sessionStorage.getItem("currentPrompts")) || [];
 
@@ -138,7 +138,7 @@ async function loadPrompt() {
 
     const responses = await fetchResponses(currentPrompt);
     console.log("Responses fetched:", responses);
-    
+
     if (responses && Array.isArray(responses) && responses.length > 0) {
         displayResponses(responses);
     } else {
