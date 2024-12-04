@@ -149,12 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const success = await apiRequest(`/games/${gameId}/join`, "POST", { username });
-            if (success.status === 200) {
-                sessionStorage.setItem("gameId", gameId); // Save gameId
-                window.location.href = "lobby.html" // Redirect to lobby
-            } else {
-                alert("Invalid Game ID or Game is not joinable. Please try again.");
-            }
+            sessionStorage.setItem("gameId", gameId); // Save gameId
+            window.location.href = "lobby.html" // Redirect to lobby
         } catch (error) {
             console.error("Error while joining game:", error);
             alert("There was an issue join the game. Please try again later.")
