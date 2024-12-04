@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const success = await apiRequest(`/games/${gameId}/join`, "POST", { username });
-            if (success) {
+            if (success.status === 200) {
                 sessionStorage.setItem("gameId", gameId); // Save gameId
                 window.location.href = "lobby.html" // Redirect to lobby
             } else {
